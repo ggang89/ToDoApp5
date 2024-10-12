@@ -1,11 +1,21 @@
 import ToDoContainer from "./ToDoContainer";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 600px;
+  padding: 5px 10px;
+  /* box-sizing: ; */
+  background: #eee;
+  
+`;
+
 
 function App() {
   return (
-    <div>
-      <h1>To Do App</h1>
+    <Wrapper>
       <ToDoContainer />
-    </div>
+    </Wrapper>
   );
 }
 

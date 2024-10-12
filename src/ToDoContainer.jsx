@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
+import Header from "./components/Header";
 
 export default function ToDoContainer() {
   const [addTodo, setAddTodo] = useState("");
@@ -70,6 +71,7 @@ export default function ToDoContainer() {
   };
   return (
     <>
+      <Header/>
       <TodoInput
         inputRef={inputRef}
         addTodo={addTodo}

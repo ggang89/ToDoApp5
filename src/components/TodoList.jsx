@@ -1,3 +1,32 @@
+import styled from "styled-components";
+
+const Li = styled.li`
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0px 10px;
+  border-bottom: 1px solid dodgerblue;
+`;
+const Todo = styled.p`
+  flex: 1;
+  font-size: 14px;
+`;
+const Donetodo = styled.p`
+  flex: 1;
+  font-size: 14px;
+  text-decoration: line-through;
+  color: gray;
+  font-style: italic;
+`;
+const Button = styled.button`
+  background-color: ${(props) => (props.$primary ? "dodgerblue" : "tomato")};
+  padding: 3px 7px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+`;
 export default function TodoList({
   isEditing,
   todoTitle,
@@ -11,21 +40,23 @@ export default function TodoList({
   return (
     <>
       {isEditing ? (
-        <li>
+        <Li>
           <input
             value={todoTitle}
             onChange={handleUpdateTodo}
             onKeyDown={enterUpdate}
           />
-          <button onClick={updateBtn}>저장</button>
-        </li>
+          <Button onClick={updateBtn}>저장</Button>
+        </Li>
       ) : (
-        <li>
+        <Li>
           <input type="checkbox" checked={isDone} onChange={onChangeCheckBox} />
-          {isDone ? <h1 >{todoTitle}</h1> : <p>{todoTitle}</p>}
-          <button onClick={updateBtn}>수정</button>
-          <button onClick={deleteBtn}>삭제</button>
-        </li>
+          {isDone ? <Donetodo>{todoTitle}</Donetodo> : <Todo>{todoTitle}</Todo>}
+          <Button $primary onClick={updateBtn}>
+            수정
+          </Button>
+          <Button onClick={deleteBtn}>삭제</Button>
+        </Li>
       )}
     </>
   );
