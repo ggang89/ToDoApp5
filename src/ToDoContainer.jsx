@@ -32,8 +32,9 @@ export default function ToDoContainer() {
     setTodoList(newList);
   };
 
-  const deleteBtn = () => {
-    
+  const deleteBtn = (id) => {
+    const newList = todoList.filter((todo) => (todo.id !== id));
+    setTodoList(newList);
   }
   return (
     <>
