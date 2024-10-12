@@ -40,8 +40,9 @@ export default function ToDoContainer() {
     const newList = todoList.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isEditing: !todo.isEditing };
+      } else {
+        return todo;
       }
-      return todo;
     });
     setTodoList(newList);
   };
@@ -83,6 +84,7 @@ export default function ToDoContainer() {
             key={todo.id}
             todoTitle={todo.todoTitle}
             isDone={todo.isDone}
+            isEditing={todo.isEditing}
             handleUpdateTodo={(e) => {
               handleUpdateTodo(e, todo.id);
             }}
