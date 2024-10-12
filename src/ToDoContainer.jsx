@@ -6,16 +6,17 @@ export default function ToDoContainer() {
   const [todoList, setTodoList] = useState([]);
 
   const inputRef = useRef(null);
- 
+
   const addTodoBtn = () => {
     if (addTodo === "") {
       inputRef.current.focus();
       return;
-    };//처음에는 정상동작되는데, 투두 추가후에는 동작안함
+    }
     const newTodo = {
       id: uuidv4(),
       todoTitle: addTodo,
       isEditing: false,
+      isDone: false,
     };
     setTodoList([newTodo, ...todoList]);
     setAddTodo("");
@@ -28,30 +29,38 @@ export default function ToDoContainer() {
       addTodoBtn();
     }
   };
-  const enterUpdate = (e,id) => {
+  const enterUpdate = (e, id) => {
     if (e.keyCode === 13) {
       updateBtn(id);
     }
   };
   const updateBtn = (id) => {
     const newList = todoList.map((todo) => {
-      if (todo.id === id) return { ...todo, isEditing: !todo.isEditing }
+      if (todo.id === id) return { ...todo, isEditing: !todo.isEditing };
       return todo;
     });
     setTodoList(newList);
   };
-  const handleUpdateTodo = (e,id) => {
+  const handleUpdateTodo = (e, id) => {
     const newList = todoList.map((todo) => {
-      if (todo.id === id) return { ...todo, todoTitle: e.target.value }
-      return todo
+      if (todo.id === id) return { ...todo, todoTitle: e.target.value };
+      return todo;
     });
     setTodoList(newList);
   };
-
-  const deleteBtn = (id) => {
-    const newList = todoList.filter((todo) => (todo.id !== id));
+  const onChangeCheckBox = (id) => {
+    const newList = todoList.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, isDone: !todo.isDone };
+      }
+      return todo;
+    });
     setTodoList(newList);
-  }
+  };
+  const deleteBtn = (id) => {
+    const newList = todoList.filter((todo) => todo.id !== id);
+    setTodoList(newList);
+  };
   return (
     <>
       <label htmlFor="addTodo">새로운 할 일 </label>
@@ -75,7 +84,9 @@ export default function ToDoContainer() {
                 onChange={(e) => {
                   handleUpdateTodo(e, todo.id);
                 }}
-                onKeyDown={(e)=>{enterUpdate(e,todo.id)}}
+                onKeyDown={(e) => {
+                  enterUpdate(e, todo.id);
+                }}
               />
               <button
                 onClick={() => {
@@ -87,7 +98,18 @@ export default function ToDoContainer() {
             </li>
           ) : (
             <li>
-              <p>{todo.todoTitle}</p>
+              <input
+                type="checkbox"
+                checked={todo.isDone}
+                onChange={() => {
+                  onChangeCheckBox(todo.id);
+                }}
+              />
+              {todo.isDone ? (
+                <h1 className="italic">{todo.todoTitle}</h1>
+              ) : (
+                <p>{todo.todoTitle}</p>
+              )}
               <button
                 onClick={() => {
                   updateBtn(todo.id);
