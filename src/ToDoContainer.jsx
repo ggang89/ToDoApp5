@@ -11,14 +11,14 @@ export default function ToDoContainer() {
     if (addTodo === "") {
       inputRef.current.focus();
       return;
-    }//처음에는 정상동작되는데, 투두 추가후에는 동작안함
+    };//처음에는 정상동작되는데, 투두 추가후에는 동작안함
     const newTodo = {
       id: uuidv4(),
       todoTitle: addTodo,
       isEditing: false,
     };
     setTodoList([newTodo, ...todoList]);
-    setAddTodo(" ");
+    setAddTodo("");
   };
   const handleAddText = (e) => {
     setAddTodo(e.target.value);
@@ -27,7 +27,12 @@ export default function ToDoContainer() {
     if (e.keyCode === 13) {
       addTodoBtn();
     }
-  }
+  };
+  const enterUpdate = (e,id) => {
+    if (e.keyCode === 13) {
+      updateBtn(id);
+    }
+  };
   const updateBtn = (id) => {
     const newList = todoList.map((todo) => {
       if (todo.id === id) return { ...todo, isEditing: !todo.isEditing }
@@ -70,6 +75,7 @@ export default function ToDoContainer() {
                 onChange={(e) => {
                   handleUpdateTodo(e, todo.id);
                 }}
+                onKeyDown={(e)=>{enterUpdate(e,todo.id)}}
               />
               <button
                 onClick={() => {
