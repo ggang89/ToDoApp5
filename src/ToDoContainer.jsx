@@ -17,7 +17,24 @@ export default function ToDoContainer() {
   const handleAddText = (e) => {
     setAddTodo(e.target.value);
   };
-  
+  const updateBtn = (id) => {
+    const newList = todoList.map((todo) => {
+      if (todo.id === id) return { ...todo, isEditing: !todo.isEditing }
+      return todo;
+    });
+    setTodoList(newList);
+  };
+  const handleUpdateTodo = (e,id) => {
+    const newList = todoList.map((todo) => {
+      if (todo.id === id) return { ...todo, todoTitle: e.target.value }
+      return todo
+    });
+    setTodoList(newList);
+  };
+
+  const deleteBtn = () => {
+    
+  }
   return (
     <>
       <label htmlFor="addTodo">할 일을 추가하세요.</label>
@@ -34,14 +51,37 @@ export default function ToDoContainer() {
         {todoList.map((todo) =>
           todo.isEditing ? (
             <li>
-              <input value={todo.todoTitle}/>
-              <button>저장</button>
+              <input
+                value={todo.todoTitle}
+                onChange={(e) => {
+                  handleUpdateTodo(e, todo.id);
+                }}
+              />
+              <button
+                onClick={() => {
+                  updateBtn(todo.id);
+                }}
+              >
+                저장
+              </button>
             </li>
           ) : (
             <li>
               <p>{todo.todoTitle}</p>
-              <button>수정</button>
-              <button>삭제</button>
+              <button
+                onClick={() => {
+                  updateBtn(todo.id);
+                }}
+              >
+                수정
+              </button>
+              <button
+                onClick={() => {
+                  deleteBtn(todo.id);
+                }}
+              >
+                삭제
+              </button>
             </li>
           )
         )}
