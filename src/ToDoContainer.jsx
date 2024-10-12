@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ToDoContainer() {
   const [addTodo, setAddTodo] = useState("");
   const [todoList, setTodoList] = useState([]);
 
+  const inputRef = useRef(null);
+ 
   const addTodoBtn = () => {
+    if (addTodo === "") {
+      inputRef.current.focus();
+      return;
+    }//처음에는 정상동작되는데, 투두 추가후에는 동작안함
     const newTodo = {
       id: uuidv4(),
       todoTitle: addTodo,
@@ -17,6 +23,11 @@ export default function ToDoContainer() {
   const handleAddText = (e) => {
     setAddTodo(e.target.value);
   };
+  const enterkey = (e) => {
+    if (e.keyCode === 13) {
+      addTodoBtn();
+    }
+  }
   const updateBtn = (id) => {
     const newList = todoList.map((todo) => {
       if (todo.id === id) return { ...todo, isEditing: !todo.isEditing }
@@ -38,13 +49,15 @@ export default function ToDoContainer() {
   }
   return (
     <>
-      <label htmlFor="addTodo">할 일을 추가하세요.</label>
+      <label htmlFor="addTodo">새로운 할 일 </label>
       <input
+        ref={inputRef}
         value={addTodo}
         onChange={handleAddText}
         type="text"
         id="addTodo"
-        placeholder="텍스트를 입력하세요"
+        placeholder=" 개발공부 "
+        onKeyDown={enterkey}
       ></input>
       <button onClick={addTodoBtn}>추가</button>
 
