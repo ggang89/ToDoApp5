@@ -4,6 +4,7 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 5px;
   padding: 10px 5px;
+  border-bottom: 5px solid lightblue;
 `;
 const Label = styled.label`
   font-size: 14px;
@@ -39,7 +40,7 @@ export default function TodoInput({
         onChange={handleAddText}
         type="text"
         id="addTodo"
-        placeholder=" 개발공부 "
+        placeholder=" 무엇을 할까요? "
         onKeyDown={enterkey}
       ></Input>
       <Button onClick={addTodoBtn}>추가</Button>

@@ -6,7 +6,15 @@ const Li = styled.li`
   align-items: center;
   gap: 3px;
   padding: 0px 10px;
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid lightblue;
+`;
+const Input = styled.input`
+  flex:1;
+  border:none;
+  border-radius: 5px;
+  height: 25px;
+  margin-bottom: 10px;
+
 `;
 const Todo = styled.p`
   flex: 1;
@@ -26,6 +34,7 @@ const Button = styled.button`
   border-radius: 5px;
   color: white;
   cursor: pointer;
+ 
 `;
 export default function TodoList({
   isEditing,
@@ -41,12 +50,12 @@ export default function TodoList({
     <>
       {isEditing ? (
         <Li>
-          <input
+          <Input
             value={todoTitle}
             onChange={handleUpdateTodo}
             onKeyDown={enterUpdate}
           />
-          <Button onClick={updateBtn}>저장</Button>
+          <Button $primary onClick={updateBtn}>저장</Button>
         </Li>
       ) : (
         <Li>
